@@ -3,17 +3,17 @@
 #include <util/delay.h>
 #include <stdio.h>
 #include "LCD.h"
-//#include "I2C.h"
 #include <string.h>
-//#include "i2cmaster.h"
-//#include "twimaster.c"
+
 #define LED PB0
 #define RTC 0x68
-//#define RTC 0xD0
+#define LCD_TEXT_DELAY 50
 
+//Message strings for the LCD
 unsigned char* name        = "Ashwin";
 unsigned char* greeting    = "Hello ";
 unsigned char* compliment  = "You're awesome!";
+
 
 
 int main()
@@ -23,37 +23,24 @@ int main()
     DDRD |= 0xFF;
     unsigned char msg[80] = "Hello Ashwin!";
     unsigned char time_s  = 0;
+    int counter = 0;
+    unsigned char *cnt = "000";
     
-    //i2c_init();
     initLCD();
-    writeAt(0, 0, greeting);
-    writeString(name);
-    writeString("!");
-    writeAt(0, 2, compliment);
-    //writeAt(0,1,msg1);
-    /* gotoXY(10,2); */
-    /* writeCom(0x94 + 0x0A); */
-
-    //i2c_start_wait(RTC + I2C_WRITE);
-    //i2c_write(0x00);
-    //i2c_stop();
-
-    //writeAt(10,2,"ABBA");
-    //writeAt(11,2,"CC");
+    writeAt(0, 0, greeting, LCD_TEXT_DELAY);
+    writeString(name, LCD_TEXT_DELAY);
+    writeString("!", 0);
+    writeAt(0, 2, compliment, LCD_TEXT_DELAY);
+    _delay_ms(3000);
 
            
     while(1)
     {
         PORTB ^= (1<<LED);  //Toggle pin
-	//i2c_start(RTC + I2C_READ);
-	//time_s = i2c_readNak();
-	//i2c_stop();
-
-	//sprintf(msg, "%d", time_s);
-
-	//writeAt(1,2,msg);
-		
+	sprintf(cnt, "%d", counter);
+	writeAt(0, 3, cnt, 0);
 	_delay_ms(1000);
+	counter++;
     }
 
     return 0;

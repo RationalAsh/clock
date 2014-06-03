@@ -18,15 +18,24 @@
 #define line2 0x94
 #define line3 0xD4
 
+void delay_ms(int ms)
+{
+    int i;
+    for(i=0; i<ms; i++)
+    {
+	_delay_ms(1);
+    }
+}
+
 void writeCom(unsigned char com)
 {
     dataPORT = com;
     conPORT |= (1<<EN); //Set enable to high
     conPORT &= ~(1<<RS);
     conPORT &= ~(1<<RW);
-    _delay_ms(1);
+    delay_ms(1);
     conPORT &= ~(1<<EN);
-    _delay_ms(1);
+    delay_ms(1);
 }
 
 void writeChar(unsigned char ch)
@@ -34,9 +43,9 @@ void writeChar(unsigned char ch)
     dataPORT = ch;
     conPORT |= (1<<EN)|(1<<RS); //Set enable to high
     conPORT &= ~(1<<RW);
-    _delay_ms(1);
+    delay_ms(1);
     conPORT &= ~(1<<EN);
-    _delay_ms(1);
+    delay_ms(1);
 }
 
 void initLCD()
@@ -49,12 +58,13 @@ void initLCD()
     writeCom(0x80);
 }
 
-void writeString(unsigned char* msg)
+void writeString(unsigned char* msg, int delay)
 {
     int len = strlen(msg);
     int i = 0;
     for(i=0; i<len; i++)
     {
+	if(delay) delay_ms(delay);
 	writeChar(msg[i]);
     }
 }
@@ -81,12 +91,12 @@ void gotoXY(int X, int Y)
     writeCom(com);
 }
     
-void writeAt(int X, int Y, unsigned char* msg)
+void writeAt(int X, int Y, unsigned char* msg, int delay)
 {
     gotoXY(X,Y);
     int len = strlen(msg);
     if(len < 20-X)
     {
-	writeString(msg);
+	writeString(msg, delay);
     }
 }
