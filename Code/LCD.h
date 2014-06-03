@@ -60,9 +60,8 @@ void initLCD()
 
 void writeString(unsigned char* msg, int delay)
 {
-    int len = strlen(msg);
-    int i = 0;
-    for(i=0; i<len; i++)
+    int i;
+    for(i=0; i<strlen(msg); i++)
     {
 	if(delay) delay_ms(delay);
 	writeChar(msg[i]);

@@ -12,3 +12,6 @@
 Makefile~
 *.c~
 *.gif
+"#ADC.h#"
+".#ADC.h"
+ds1302.txt
