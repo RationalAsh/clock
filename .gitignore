@@ -3,3 +3,11 @@
 *.o
 *.zip
 *.pdf
+*.org~
+*.gitignore~
+*.md~
+"#README.md#"
+".#README.md"
+*.h~
+Makefile~
+*.c~
