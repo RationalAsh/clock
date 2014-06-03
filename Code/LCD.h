@@ -10,9 +10,9 @@
  
 #define dataPORT PORTD    	// In my case PORTB is the PORT from which I send data to my LCD
 #define conPORT PORTC		// In my case PORTC is the PORT from which I set the RS , R/W and En
-#define EN PORTC4		// Enable signal
-#define RW PORTC3		// Read/Write signal
-#define RS PORTC2		// Register Select signal
+#define EN PORTC3		// Enable signal
+#define RW PORTC2		// Read/Write signal
+#define RS PORTC1		// Register Select signal
 #define line0 0x80
 #define line1 0xC0
 #define line2 0x94
@@ -41,6 +41,7 @@ void writeChar(unsigned char ch)
 
 void initLCD()
 {
+    DDRC |= (1<<EN)|(1<<RS)|(1<<RW);
     writeCom(0x3C);
     writeCom(0x0C);
     writeCom(0x06);
