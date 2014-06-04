@@ -4,9 +4,8 @@
  
 #include <avr/io.h>
 #include <util/delay.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+
  
 #define dataPORT PORTD    	// In my case PORTB is the PORT from which I send data to my LCD
 #define conPORT PORTC		// In my case PORTC is the PORT from which I set the RS , R/W and En
@@ -58,7 +57,7 @@ void initLCD()
     writeCom(0x80);
 }
 
-void writeString(unsigned char* msg, int delay)
+void writeString(unsigned char* msg, uint8_t delay)
 {
     int i;
     for(i=0; i<strlen(msg); i++)
@@ -93,8 +92,7 @@ void gotoXY(int X, int Y)
 void writeAt(int X, int Y, unsigned char* msg, int delay)
 {
     gotoXY(X,Y);
-    int len = strlen(msg);
-    if(len < 20-X)
+    if(strlen(msg) < 20-X)
     {
 	writeString(msg, delay);
     }
