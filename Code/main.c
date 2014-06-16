@@ -30,6 +30,7 @@ int main()
     while(1)
     {
 	tick(&time);
+
 	updateAllStrings(&time);
 	writeAt(0, 0, time.dateString, NO_DELAY);
 	writeAt(0, 1, time.timeString, NO_DELAY);

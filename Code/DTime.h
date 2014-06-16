@@ -15,9 +15,10 @@ struct moment
     unsigned char timeString[9];
     uint8_t second;
     unsigned char dateString[11];
+    uint8_t daysInMonth[13];
     unsigned char *dayString;
-
-} dflt = {14, 6, 3, 17, 59, "17:59:59", 59, "14-06-03"};
+} dflt = {14, 12, 31, 23, 59, "23:59:55", 55, "14-12-31", 
+	  {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
 
 unsigned char *getDay(int year, int month, int day) {
   /* using C99 compound literals in a single line: notice the splicing */
@@ -104,5 +105,15 @@ void tick(struct moment* m)
 	m->day  += 1;
     }
 
-    //if(m->day == 
+    if(m->day > m->daysInMonth[m->month])
+    {
+	m->day     = 1;
+	m->month  += 1;
+    }
+    
+    if(m->month > 12)
+    {
+	m->month  = 1;
+	m->year  += 1;
+    }
 }

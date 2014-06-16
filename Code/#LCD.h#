@@ -52,8 +52,6 @@ void writeChar(unsigned char ch)
     delay_ms(1);
 }
 
-//This function initializes the LCD. This must be called
-//before any of the other functions are used.
 void initLCD()
 {
     DDRC |= (1<<EN)|(1<<RS)|(1<<RW);
@@ -64,9 +62,6 @@ void initLCD()
     writeCom(0x80);
 }
 
-//Writes a string to the LCD module starting at the current cursor position.
-//The delay is the delay between writing each character on the screen. Put a
-//delay of about 50ms for the best effect.
 void writeString(unsigned char* msg, uint8_t delay)
 {
     int i;
@@ -77,8 +72,6 @@ void writeString(unsigned char* msg, uint8_t delay)
     }
 }
 
-//Makes the cursor go to an X,Y position on the 
-//LCD. It's nice.
 void gotoXY(int X, int Y)
 {
     int com = 0x00;
@@ -101,8 +94,6 @@ void gotoXY(int X, int Y)
     writeCom(com);
 }
     
-//Writes a string at a particular position on the LCD.
-//Quite useful.
 void writeAt(int X, int Y, unsigned char* msg, int delay)
 {
     gotoXY(X,Y);
