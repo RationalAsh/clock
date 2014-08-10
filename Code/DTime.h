@@ -20,10 +20,10 @@ struct moment
 } dflt = {14, 12, 31, 23, 59, "23:59:55", 55, "14-12-31", 
 	  {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
 
-unsigned char *getDay(int year, int month, int day) {
+unsigned char *getDay2(int year, int month, int day) {
   static unsigned char *weekdayname[] = {"MON", "TUE",
         "WED", "THU", "FRI", "SAT", "SUN"};
-  int32_t JND =                                                    \
+  uint32_t JND =                                                    \
           day                                                      \
         + ((153 * (month + 12 * ((14 - month) / 12) - 3) + 2) / 5) \
         + (365 * (year + 4800 - ((14 - month) / 12)))              \
@@ -32,6 +32,13 @@ unsigned char *getDay(int year, int month, int day) {
         + ((year + 4800 - ((14 - month) / 12)) / 400)              \
         - 32045;
   return weekdayname[(JND+3) % 7];
+}
+
+unsigned char *getDay(int y, int m, int d) {
+    static unsigned char *weekdayname[] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+
+    int weekday  = (d += m < 3 ? y-- : y - 2 , 23 * m / 9 + d + 4 + y / 4 - y / 100 + y / 400) % 7;
+    return weekdayname[weekday];
 }
 
 void pushIntToStr(int i, unsigned char* str, int startPos, int numberOfDigits)
