@@ -20,20 +20,22 @@ struct moment
 } dflt = {14, 12, 31, 23, 59, "23:59:55", 55, "14-12-31", 
 	  {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
 
-unsigned char *getDay2(int year, int month, int day) {
-  static unsigned char *weekdayname[] = {"MON", "TUE",
-        "WED", "THU", "FRI", "SAT", "SUN"};
-  uint32_t JND =                                                    \
-          day                                                      \
-        + ((153 * (month + 12 * ((14 - month) / 12) - 3) + 2) / 5) \
-        + (365 * (year + 4800 - ((14 - month) / 12)))              \
-        + ((year + 4800 - ((14 - month) / 12)) / 4)                \
-        - ((year + 4800 - ((14 - month) / 12)) / 100)              \
-        + ((year + 4800 - ((14 - month) / 12)) / 400)              \
-        - 32045;
-  return weekdayname[(JND+3) % 7];
-}
+//The result this functin gives is off by three days. Find out why
+/* unsigned char *getDay2(int year, int month, int day) { */
+/*   static unsigned char *weekdayname[] = {"MON", "TUE", */
+/*         "WED", "THU", "FRI", "SAT", "SUN"}; */
+/*   uint32_t JND =                                                    \ */
+/*           day                                                      \ */
+/*         + ((153 * (month + 12 * ((14 - month) / 12) - 3) + 2) / 5) \ */
+/*         + (365 * (year + 4800 - ((14 - month) / 12)))              \ */
+/*         + ((year + 4800 - ((14 - month) / 12)) / 4)                \ */
+/*         - ((year + 4800 - ((14 - month) / 12)) / 100)              \ */
+/*         + ((year + 4800 - ((14 - month) / 12)) / 400)              \ */
+/*         - 32045; */
+/*   return weekdayname[(JND+3) % 7]; */
+/* } */
 
+//This works
 unsigned char *getDay(int y, int m, int d) {
     static unsigned char *weekdayname[] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
