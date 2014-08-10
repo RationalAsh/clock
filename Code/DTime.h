@@ -34,22 +34,6 @@ unsigned char *getDay(int year, int month, int day) {
   return weekdayname[(JND+3) % 7];
 }
 
-unsigned char *getDay2(int year, int month, int day) {
-  /* using C99 compound literals in a single line: notice the splicing */
-  return ((unsigned char *[])                                      \
-          {"MON", "TUE", "WED",                                    \
-           "THU", "FRI", "SAT", "SUN"})[                           \
-      (                                                            \
-          day                                                      \
-        + ((153 * (month + 12 * ((14 - month) / 12) - 3) + 2) / 5) \
-        + (365 * (year + 4800 - ((14 - month) / 12)))              \
-        + ((year + 4800 - ((14 - month) / 12)) / 4)                \
-        - ((year + 4800 - ((14 - month) / 12)) / 100)              \
-        + ((year + 4800 - ((14 - month) / 12)) / 400)              \
-        - 32045                                                    \
-      ) % 7];
-}
-
 void pushIntToStr(int i, unsigned char* str, int startPos, int numberOfDigits)
 {
     unsigned char* tmp;
