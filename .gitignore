@@ -15,4 +15,8 @@ Makefile~
 "#ADC.h#"
 ".#ADC.h"
 ds1302.txt
+<<<<<<< HEAD
 *.tgz
+=======
+*.tgz
+>>>>>>> f677f84ed81775aeab4647a4ddc66e5f0ff0c8ef
