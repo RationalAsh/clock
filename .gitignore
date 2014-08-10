@@ -15,3 +15,4 @@ Makefile~
 "#ADC.h#"
 ".#ADC.h"
 ds1302.txt
+*.tgz
