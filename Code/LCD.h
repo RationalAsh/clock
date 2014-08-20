@@ -106,7 +106,7 @@ void gotoXY(int X, int Y)
 void writeAt(int X, int Y, unsigned char* msg, int delay)
 {
     gotoXY(X,Y);
-    if(strlen(msg) < 20-X)
+    if(strlen(msg) <= 20-X)
     {
 	writeString(msg, delay);
     }
