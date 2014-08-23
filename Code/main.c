@@ -25,8 +25,8 @@ unsigned char* nick1      = {"Tibha!"};
 unsigned char* nick2      = {"Aurora!"};
 unsigned char* morning    = {"Good Morning "};
 unsigned char* compliment = {"You're awesome!"};
-unsigned char* temp = {"39"};
-unsigned char* units = {"dC"};
+unsigned char* temp       = {"39"};
+unsigned char* units      = {"dC"};
 
 
 //Get temperature reading
@@ -109,7 +109,7 @@ void startClock()
     TIMSK |= (1<<OCIE1A);
     //Set clock prescaler 1/64
     //TCCR1B |= (1<<CS10)|(1<<CS11);
-    TCCR1B &= ~(1<<CS12);
+    //TCCR1B &= ~(1<<CS12);
 }
 
 ISR(TIMER1_COMPA_vect)
