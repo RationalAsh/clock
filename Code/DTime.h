@@ -17,7 +17,7 @@ struct moment
     unsigned char dateString[11];
     uint8_t daysInMonth[13];
     unsigned char *dayString;
-} dflt = {14, 12, 31, 23, 59, "23:59:55", 55, "14-12-31", 
+} dflt = {14, 3, 18, 23, 59, "23:59:55", 55, "14-12-31", 
 	  {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
 
 //The result this functin gives is off by three days. Find out why
