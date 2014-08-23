@@ -20,8 +20,10 @@ struct moment time;
 unsigned char* cnt = "0";
 uint8_t setFlag = 0;
 //Message strings for the LCD
-unsigned char* username   = {"Pratibha"};
-unsigned char* greeting   = {"Hello"};
+unsigned char* username   = {"Pratibha!"};
+unsigned char* nick1      = {"Tibha!"};
+unsigned char* nick2      = {"Aurora!"};
+unsigned char* morning    = {"Good Morning "};
 unsigned char* compliment = {"You're awesome!"};
 unsigned char* temp = {"39"};
 unsigned char* units = {"dC"};
@@ -50,10 +52,10 @@ int main()
     
     //enable global interrupts
     
-    writeAt(0, 1, time.timeString, LCD_TEXT_DELAY);
-    writeAt(0, 2, greeting, LCD_TEXT_DELAY);
-    writeAt(0, 3, compliment, LCD_TEXT_DELAY);
-    writeAt(18, 1, units, NO_DELAY);
+    writeAt(6, 2, time.timeString, LCD_TEXT_DELAY);
+    writeAt(0, 1, morning, LCD_TEXT_DELAY);
+    writeAt(0, 13, nick1, LCD_TEXT_DELAY);
+    writeAt(18, 0, units, NO_DELAY);
     _delay_ms(3000);
     startClock();
     sei();
@@ -99,14 +101,14 @@ void startClock()
 {
     //Set mode of operation CTC with OCR1A
     TCCR1A &= ~((1<<WGM11)|(1<<WGM10));
-    TCCR1B |= (1<<WGM12);
-    TCCR1B &= ~(1<<WGM13);
+    TCCR1B |= (1<<WGM12)|(1<<CS10)|(1<<CS11);
+    TCCR1B &= ~((1<<WGM13)|(1<<CS12));
     //Set the compare match value
     OCR1A = 15625;
     //Enable the interrupt
     TIMSK |= (1<<OCIE1A);
     //Set clock prescaler 1/64
-    TCCR1B |= (1<<CS10)|(1<<CS11);
+    //TCCR1B |= (1<<CS10)|(1<<CS11);
     TCCR1B &= ~(1<<CS12);
 }
 
@@ -115,10 +117,10 @@ ISR(TIMER1_COMPA_vect)
     tick(&time);
     updateAllStrings(&time);
     writeAt(0, 0, time.dateString, NO_DELAY);
-    writeAt(0, 1, time.timeString, NO_DELAY);
-    writeAt(17, 0, time.dayString, NO_DELAY);
+    writeAt(6, 2, time.timeString, NO_DELAY);
+    writeAt(11, 0, time.dayString, NO_DELAY);
     itoa((5 * getTemp() * 100)/1024, temp, DEC);
-    writeAt(16, 1, temp, NO_DELAY);
+    writeAt(16, 0, temp, NO_DELAY);
 }
     
     
