@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "LCD.h"
 #include "DTime.h"
-#include <avr/pgmspace.h>
+//#include <avr/pgmspace.h>
 #include <avr/interrupt.h>
 
 
@@ -19,12 +19,13 @@
 struct moment time;
 unsigned char* cnt = "0";
 uint8_t setFlag = 0;
+uint8_t setMode = 0;
 //Message strings for the LCD
-unsigned char* username   = {"Pratibha!"};
-unsigned char* nick1      = {"Tibha!"};
-unsigned char* nick2      = {"Aurora!"};
-unsigned char* morning    = {"Good Morning "};
-unsigned char* compliment = {"You're awesome!"};
+
+//unsigned char* nick1      = {"Tibha!"};
+
+//unsigned char* morning    = {"Good Morning "};
+
 unsigned char* temp       = {"39"};
 unsigned char* units      = {"dC"};
 
@@ -35,7 +36,10 @@ void startClock();
 
 int main()
 {
+
     units[0] = (char)223;
+    char modes[] = "smhDMY";
+	char mode[] = "MODE:  ";
     
     //uint16_t temp_adc;
     
@@ -47,30 +51,86 @@ int main()
     time = dflt;  //Initialize struct to default values
 
        
-    
+    //Initialize the LCD
     initLCD();
-    
-    //enable global interrupts
-    
-    writeAt(6, 2, time.timeString, LCD_TEXT_DELAY);
-    writeAt(0, 1, morning, LCD_TEXT_DELAY);
-    writeAt(0, 13, nick1, LCD_TEXT_DELAY);
+        
+    //writeAt(0, 1, morning, LCD_TEXT_DELAY);
+    //writeAt(0, 13, nick1, LCD_TEXT_DELAY);
     writeAt(18, 0, units, NO_DELAY);
+    //writeAt(0, 3, "MODE: ", NO_DELAY);
     _delay_ms(3000);
     startClock();
+    //enable global interrupts
     sei();
            
     while(1)
     {
-	if(!(PINB &(1<<PINB0))&&(setFlag))
+	if(!(PINB &(1<<SET))&&(setFlag))
 	{
-	    writeAt(0, 3, "BUTTON", NO_DELAY);
+	    setMode++;
+	    if(setMode>6) setMode = 0;
 	    setFlag = 0;
+	    mode[6] = modes[setMode];
+	    writeAt(6, 3, mode, NO_DELAY);
 	}
-	if(!(PINB & (1<<PINB0)))
+	if(!(PINB & (1<<SET)))
 	{
 	    setFlag = 1;
 	}
+
+	if(!(PINB &(1<<UP)))
+	{
+	    switch(setMode)
+	    {
+	    case 0:
+		time.second++;
+		break;
+	    case 1:
+		time.minute++;
+		break;
+	    case 2:
+		time.hour++;
+		break;
+	    case 3:
+		time.day++;
+		break;
+	    case 4:
+		time.month++;
+		break;
+	    case 5:
+		time.year++;
+		break;
+	    }
+	}
+
+	if(!(PINB &(1<<DWN)))
+	{
+	    switch(setMode)
+	    {
+	    case 0:
+		time.second--;
+		break;
+	    case 1:
+		time.minute--;
+		break;
+	    case 2:
+		time.hour--;
+		break;
+	    case 3:
+		time.day--;
+		break;
+	    case 4:
+		time.month--;
+		break;
+	    case 5:
+		time.year--;
+		break;
+	    }
+	}
+
+	//Start conversion (ADC
+	ADCSRA |= (1<<ADSC);
+	delay_ms(500);
 	//_delay_ms(500);
     }
 
@@ -91,10 +151,11 @@ int getTemp()
     //Start conversion
     ADCSRA |= (1<<ADSC);
     //Wait for the conversion to complete
+    //while(!(ADCSRA & (1<<ADIF)))
     _delay_us(1);
-    
+    //asm("nop");
     //Read the ADC in 10 bit resolution
-    return ADCL + (ADCH<<8);
+    return ADC;
 }
 
 void startClock()

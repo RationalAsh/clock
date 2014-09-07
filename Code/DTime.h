@@ -20,21 +20,6 @@ struct moment
 } dflt = {14, 3, 18, 23, 59, "23:59:55", 55, "14-12-31", 
 	  {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
 
-//The result this functin gives is off by three days. Find out why
-/* unsigned char *getDay2(int year, int month, int day) { */
-/*   static unsigned char *weekdayname[] = {"MON", "TUE", */
-/*         "WED", "THU", "FRI", "SAT", "SUN"}; */
-/*   uint32_t JND =                                                    \ */
-/*           day                                                      \ */
-/*         + ((153 * (month + 12 * ((14 - month) / 12) - 3) + 2) / 5) \ */
-/*         + (365 * (year + 4800 - ((14 - month) / 12)))              \ */
-/*         + ((year + 4800 - ((14 - month) / 12)) / 4)                \ */
-/*         - ((year + 4800 - ((14 - month) / 12)) / 100)              \ */
-/*         + ((year + 4800 - ((14 - month) / 12)) / 400)              \ */
-/*         - 32045; */
-/*   return weekdayname[(JND+3) % 7]; */
-/* } */
-
 //This works
 unsigned char *getDay(int y, int m, int d) {
     static unsigned char *weekdayname[] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
@@ -92,35 +77,34 @@ void updateAllStrings(struct moment* m)
 
 void tick(struct moment* m)
 {
-    m->second += 1;
-
-    if(m->second == 60)
+    m->second++;
+    if(m->second > 59)
     {
-	m->second  =  0;
-	m->minute +=  1;
+    	m->second  =  0;
+    	m->minute +=  1;
     }
 
-    if(m->minute == 60)
+    if(m->minute > 59)
     {
-	m->minute  =  0;
-	m->hour   +=  1;
+    	m->minute  =  0;
+    	m->hour   +=  1;
     }
 
-    if(m->hour == 24)
+    if(m->hour > 23)
     {
-	m->hour  = 0;
-	m->day  += 1;
+    	m->hour  = 0;
+    	m->day  += 1;
     }
 
     if(m->day > m->daysInMonth[m->month])
     {
-	m->day     = 1;
-	m->month  += 1;
+    	m->day     = 1;
+    	m->month  += 1;
     }
     
     if(m->month > 12)
     {
-	m->month  = 1;
-	m->year  += 1;
+    	m->month  = 1;
+    	m->year  += 1;
     }
 }
