@@ -1,4 +1,4 @@
-#define F_CPU 1000000UL
+#define F_CPU 12000000UL
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdio.h>
@@ -129,7 +129,7 @@ int main()
 	}
 
 	//Start conversion (ADC
-	ADCSRA |= (1<<ADSC);
+	//ADCSRA |= (1<<ADSC);
 	delay_ms(500);
 	//_delay_ms(500);
     }
@@ -161,11 +161,12 @@ int getTemp()
 void startClock()
 {
     //Set mode of operation CTC with OCR1A
+    //Prescaler of 256
     TCCR1A &= ~((1<<WGM11)|(1<<WGM10));
-    TCCR1B |= (1<<WGM12)|(1<<CS10)|(1<<CS11);
-    TCCR1B &= ~((1<<WGM13)|(1<<CS12));
+    TCCR1B |= (1<<WGM12)|(1<<CS12);
+    TCCR1B &= ~((1<<WGM13)|(1<<CS10)|(1<<CS11));
     //Set the compare match value
-    OCR1A = 15625;
+    OCR1A = 46875;
     //Enable the interrupt
     TIMSK |= (1<<OCIE1A);
     //Set clock prescaler 1/64
@@ -180,7 +181,7 @@ ISR(TIMER1_COMPA_vect)
     writeAt(0, 0, time.dateString, NO_DELAY);
     writeAt(6, 2, time.timeString, NO_DELAY);
     writeAt(11, 0, time.dayString, NO_DELAY);
-    itoa((5 * getTemp() * 100)/1024, temp, DEC);
+    itoa(getTemp()*0.4882815, temp, DEC);
     writeAt(16, 0, temp, NO_DELAY);
 }
     

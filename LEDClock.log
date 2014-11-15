@@ -1,0 +1,5 @@
+# Writing all output to: Z:\home\rationalash\Documents\BtechStuff\Clock\LEDClock.log
+set pad_wire_necking on
+bus diagonal
+fanout 5
+route 50
