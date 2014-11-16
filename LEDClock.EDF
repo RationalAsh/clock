@@ -64,6 +64,10 @@
   (component RES40_R2 (place R2 26.67000 -33.02000 front -90))
   (component "TO92-100_U4" (place U4 96.52000 -6.35000 front 0))
   (component DIL28NAR_U3 (place U3 34.29000 -17.78000 front 0))
+  (component CAP10_C3 (place C3 50.80000 -45.72000 front 0))
+  (component CAP10_C4 (place C4 58.42000 -45.72000 front 0))
+  (component "TO92-100_U1" (place U1 96.52000 -20.32000 front 0))
+  (component XTAL18_X1 (place X1 53.34000 -38.10000 front 0))
  )
  (library
   (image P1_U2 (side front)
@@ -173,6 +177,27 @@
    (pin PS6 (rotate 90) 25 5.08000 7.62000)
    (pin PS7 (rotate 90) 26 2.54000 7.62000)
    (pin PS6 (rotate 90) 27 0.02000 7.62000)
+  )
+  (image CAP10_C3 (side front)
+   (outline (rect TOP -1.37160 -1.37160 3.91160 1.37160))
+   (pin PS1 (rotate 0) 0 0.00000 0.00000)
+   (pin PS1 (rotate 0) 1 2.54000 0.00000)
+  )
+  (image CAP10_C4 (side front)
+   (outline (rect TOP -1.37160 -1.37160 3.91160 1.37160))
+   (pin PS1 (rotate 0) 0 0.00000 0.00000)
+   (pin PS1 (rotate 0) 1 2.54000 0.00000)
+  )
+  (image "TO92-100_U1" (side front)
+   (outline (rect TOP -4.16560 -1.49860 4.16560 4.16560))
+   (pin PS4 (rotate 0) 0 -2.54000 0.00000)
+   (pin PS4 (rotate 0) 1 0.00000 0.00000)
+   (pin PS4 (rotate 0) 2 2.54000 0.00000)
+  )
+  (image XTAL18_X1 (side front)
+   (outline (rect TOP -2.64160 -2.64160 7.72160 2.64160))
+   (pin PS4 (rotate 0) 0 0.00000 0.00000)
+   (pin PS4 (rotate 0) 1 5.08000 0.00000)
   )
   (padstack PS0 (absolute on)
    (shape (rect TOP -1.01600 -1.01600 1.01600 1.01600))
@@ -451,6 +476,20 @@
    )
    (pins J4-3 U3-23)
   )
+  (net "#00020"
+   (circuit
+    (use_layer TOP BOT)
+    (use_via $VIA_SIGNAL)
+   )
+   (pins U3-8 C3-1 X1-0)
+  )
+  (net "#00021"
+   (circuit
+    (use_layer TOP BOT)
+    (use_via $VIA_SIGNAL)
+   )
+   (pins U3-9 C4-1 X1-1)
+  )
   (net "#00022"
    (circuit
     (use_layer TOP BOT)
@@ -463,7 +502,7 @@
     (use_layer TOP BOT)
     (use_via $VIA_SIGNAL)
    )
-   (pins U4-1 U3-22)
+   (pins U4-1 U3-22 U1-1)
   )
   (net "+9.0V"
    (circuit
@@ -477,14 +516,15 @@
     (use_layer TOP BOT)
     (use_via $VIA_POWER)
    )
-   (pins U2-1 C1-1 C2-1 J1-1 J3-0 J3-1 J3-2 J3-3 J4-0 J4-14 U4-2 U3-7 U3-21)
+    (pins U2-1 C1-1 C2-1 J1-1 J3-0 J3-1 J3-2 J3-3 J4-0 J4-14 U4-2 U3-7 U3-21 C3-0 C4-0
+    U1-2)
   )
   (net "VCC/VDD"
    (circuit
     (use_layer TOP BOT)
     (use_via $VIA_POWER)
    )
-   (pins U2-2 C2-0 J4-1 J4-2 J5-0 J5-1 J5-2 J5-3 R1-1 R2-0 U4-0 U3-6 U3-20)
+   (pins U2-2 C2-0 J4-1 J4-2 J5-0 J5-1 J5-2 J5-3 R1-1 R2-0 U4-0 U3-6 U3-20 U1-0)
   )
   (class POWER
    "+9.0V"
@@ -514,6 +554,8 @@
    "#00010"
    "#00011"
    "#00012"
+   "#00020"
+   "#00021"
    "#00022"
    "#00023"
    "{NC}"
@@ -553,14 +595,14 @@
   ) (net "GND"))
    (wire (path TOP 0.30480 38.10000 -8.89000 48.26000 -8.89000 49.53000 -10.16000) (net "GND")
   )
-   (wire (path TOP 0.30480 38.10000 -8.89000 28.13000 -8.89000 26.86000 -10.16000) (net "GND")
+   (wire (path TOP 0.30480 26.86000 -10.16000 28.13000 -8.89000 38.10000 -8.89000) (net "GND")
   )
    (wire (path TOP 0.30480 11.43000 -13.97000 17.05000 -13.97000 20.86000 -10.16000)
    (net "GND"))
    (wire (path TOP 0.30480 64.13500 -13.33500 63.53000 -13.94000 63.53000 -27.94000)
    (net "GND"))
   (wire (path TOP 0.30480 20.86000 -10.16000 22.86000 -10.16000) (net "GND"))
-  (wire (path TOP 0.30480 26.86000 -10.16000 24.86000 -10.16000) (net "GND"))
+  (wire (path TOP 0.30480 24.86000 -10.16000 26.86000 -10.16000) (net "GND"))
   (wire (path TOP 0.30480 22.86000 -10.16000 24.86000 -10.16000) (net "GND"))
    (wire (path TOP 0.30480 52.07000 -10.16000 55.88000 -6.35000 93.98000 -6.35000) (net "VCC/VDD")
   )
@@ -609,7 +651,7 @@
    (wire (path BOT 0.30480 49.53000 -10.16000 48.26000 -11.43000 48.26000 -19.05000 48.89500 -19.68500
    50.16500 -19.68500 52.07000 -17.78000) (net "GND"))
   (wire (path BOT 0.30480 11.43000 -13.97000 11.43000 -17.78000) (net "GND"))
-   (wire (path BOT 0.30480 35.53000 -27.94000 35.53000 -9.55500 36.19500 -8.89000 38.10000 -8.89000
+   (wire (path BOT 0.30480 38.10000 -8.89000 36.19500 -8.89000 35.53000 -9.55500 35.53000 -27.94000
   ) (net "GND"))
    (wire (path BOT 0.30480 11.43000 -8.89000 11.43000 -10.79500 11.43000 -13.97000) (net "GND")
   )
