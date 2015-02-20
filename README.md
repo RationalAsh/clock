@@ -4,6 +4,16 @@ Clock
 I'm making a digital clock as a learning exercise. All the files/code related to it will be in this repo.
 
 
+20/2/2015 - Final Update
+=========================
+
+I finished the clock last December and gifted it to my SO. She loved it! :)
+I'm posting a final image of the completed clock! I stuck a random Superman
+figurine to the top! 
+
+![Image3](http://i.imgur.com/lIZCrqh.jpg)
+
+
 16/11/2014 - Update
 ====================
 
